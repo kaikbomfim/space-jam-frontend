@@ -1,24 +1,36 @@
 import { Plus } from "lucide-react";
+import Button from "../Button";
 
-const PageHeader = ({ title, icon: Icon, onAddClick }) => {
+const PageHeader = ({
+  title,
+  description,
+  count,
+  addLabel = "Novo cadastro",
+  onAddClick,
+  children,
+}) => {
   return (
-    <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-      <div className="flex items-center gap-3">
-        {Icon && (
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
-            <Icon size={24} />
-          </div>
+    <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <div className="flex flex-col gap-2.5">
+        {count !== undefined && (
+          <span className="text-[13px] font-bold tracking-[2px] text-nebula">
+            COLEÇÃO · {count} {count === 1 ? "REGISTRO" : "REGISTROS"}
+          </span>
         )}
-        <h1 className="text-xl font-bold text-gray-800 sm:text-2xl">{title}</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight sm:text-[44px]">
+          {title}
+        </h1>
+        {description && (
+          <p className="text-[17px] text-muted">{description}</p>
+        )}
       </div>
-      <button
-        onClick={onAddClick}
-        className="flex w-full items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 sm:w-auto"
-        style={{ cursor: "pointer" }}
-      >
-        <Plus size={16} />
-        Novo cadastro
-      </button>
+
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        {children}
+        <Button size="lg" icon={Plus} onClick={onAddClick}>
+          {addLabel}
+        </Button>
+      </div>
     </div>
   );
 };
