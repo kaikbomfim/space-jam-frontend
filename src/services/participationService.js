@@ -11,9 +11,9 @@ export const getParticipations = async () => {
 
 export const findParticipationByIds = async (gameId, teamId, playerId) => {
   let url = "/find?";
-  if (gameId) url += `game_id=${gameId}&`;
-  if (teamId) url += `team_id=${teamId}&`;
-  if (playerId) url += `player_id=${playerId}&`;
+  if (gameId) url += `gameId=${gameId}&`;
+  if (teamId) url += `teamId=${teamId}&`;
+  if (playerId) url += `playerId=${playerId}&`;
   url = url.slice(0, -1);
   const response = await participationService.get(url);
   return response.data;
