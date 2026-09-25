@@ -6,6 +6,7 @@ const ModalHeader = ({ title, onClose }) => {
       <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
       {onClose && (
         <button
+          type="button"
           onClick={onClose}
           className="rounded-full p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
