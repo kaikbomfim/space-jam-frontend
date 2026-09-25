@@ -10,7 +10,7 @@ export const getPlayers = async () => {
 };
 
 export const getPlayerByFavoritePosition = async (favoritePosition) => {
-  const response = await playerService.get(`/find?favorite_position=${favoritePosition}`);
+  const response = await playerService.get(`/find?favoritePosition=${favoritePosition}`);
   return response.data;
 };
 
