@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Users } from "lucide-react";
+import PageContainer from "../../components/PageContainer";
 import Header from "../../components/Header";
 import SearchBar from "../../components/SearchBar";
 import Table from "../../components/Table";
 import FormModal from "../../components/FormModal";
+import FormField from "../../components/FormField";
 import DeleteModal from "../../components/DeleteModal";
 import {
   getTeams,
@@ -12,101 +13,7 @@ import {
   updateTeam,
   deleteTeam,
 } from "../../services/teamService";
-
-const TeamHeader = ({ onAddClick, onSearch }) => {
-  return (
-    <div>
-      <Header title="Times" icon={Users} onAddClick={onAddClick} />
-      <SearchBar placeholder="Buscar time pelo nome..." onSearch={onSearch} />
-    </div>
-  );
-};
-
-const TeamTable = ({ teams, onEditClick, onDeleteClick }) => {
-  return (
-    <Table>
-      <Table.Header>
-        <Table.HeadCell>ID</Table.HeadCell>
-        <Table.HeadCell>Nome</Table.HeadCell>
-        <Table.HeadCell className="text-right">
-          Ações
-        </Table.HeadCell>
-      </Table.Header>
-
-      <Table.Body>
-        {teams.length > 0 ? (
-          teams.map((team) => (
-            <Table.Row key={team._id}>
-              <Table.Cell>{team._id}</Table.Cell>
-              <Table.Cell className="font-medium text-gray-900">
-                {team.name}
-              </Table.Cell>
-              <Table.Cell>
-                <Table.Actions
-                  onEdit={() => onEditClick(team)}
-                  onDelete={() => onDeleteClick(team)}
-                />
-              </Table.Cell>
-            </Table.Row>
-          ))
-        ) : (
-          <Table.Row>
-            <Table.Cell colSpan={3} className="py-8 text-center">
-              Nenhum time encontrado.
-            </Table.Cell>
-          </Table.Row>
-        )}
-      </Table.Body>
-    </Table>
-  );
-};
-
-const TeamFormModal = ({
-  isOpen,
-  onClose,
-  onSubmit,
-  currentTeam,
-  formData,
-  setFormData,
-}) => {
-  return (
-    <FormModal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={currentTeam ? "Editar Time" : "Novo Time"}
-      onSubmit={onSubmit}
-      isEditing={!!currentTeam}
-    >
-      <div>
-        <label
-          htmlFor="team-name"
-          className="mb-1 block text-sm font-medium text-gray-700"
-        >
-          Nome
-        </label>
-        <input
-          type="text"
-          id="team-name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-          required
-        />
-      </div>
-    </FormModal>
-  );
-};
-
-const TeamDeleteModal = ({ isOpen, onClose, onConfirm, currentTeam }) => {
-  return (
-    <DeleteModal
-      isOpen={isOpen}
-      onClose={onClose}
-      onConfirm={onConfirm}
-      resourceName={currentTeam?.name}
-    />
-  );
-};
+import { EMPTY_TEAM_FORM } from "../../constants/team";
 
 const Team = () => {
   const [teams, setTeams] = useState([]);
@@ -115,7 +22,7 @@ const Team = () => {
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentTeam, setCurrentTeam] = useState(null);
-  const [formData, setFormData] = useState({ name: "" });
+  const [formData, setFormData] = useState(EMPTY_TEAM_FORM);
 
   useEffect(() => {
     const loadTeams = async () => {
@@ -126,6 +33,7 @@ const Team = () => {
         setTeams(data);
       } catch (error) {
         console.error(error);
+        setTeams([]);
       }
     };
 
@@ -142,7 +50,7 @@ const Team = () => {
 
   const handleAddClick = () => {
     setCurrentTeam(null);
-    setFormData({ name: "" });
+    setFormData(EMPTY_TEAM_FORM);
     setIsFormModalOpen(true);
   };
 
@@ -182,31 +90,82 @@ const Team = () => {
   };
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col gap-6">
-      <TeamHeader onAddClick={handleAddClick} onSearch={handleSearch} />
+    <PageContainer>
+      <Header
+        title="Times"
+        description="As equipes que disputam as partidas da liga."
+        count={teams.length}
+        addLabel="Novo time"
+        onAddClick={handleAddClick}
+      >
+        <SearchBar placeholder="Buscar por nome…" onSearch={handleSearch} />
+      </Header>
 
-      <TeamTable
-        teams={teams}
-        onEditClick={handleEditClick}
-        onDeleteClick={handleDeleteClick}
-      />
+      <Table>
+        <Table.Header>
+          <Table.HeadCell>ID</Table.HeadCell>
+          <Table.HeadCell>Nome</Table.HeadCell>
+          <Table.HeadCell className="text-right">
+            Ações
+          </Table.HeadCell>
+        </Table.Header>
 
-      <TeamFormModal
+        <Table.Body>
+          {teams.length > 0 ? (
+            teams.map((team) => (
+              <Table.Row key={team._id}>
+                <Table.Cell className="font-mono text-sm text-muted">
+                  {team._id}
+                </Table.Cell>
+                <Table.Cell className="font-display font-bold tracking-wide">
+                  {team.name}
+                </Table.Cell>
+                <Table.Cell>
+                  <Table.Actions
+                    onEdit={() => handleEditClick(team)}
+                    onDelete={() => handleDeleteClick(team)}
+                  />
+                </Table.Cell>
+              </Table.Row>
+            ))
+          ) : (
+            <Table.Row>
+              <Table.Cell
+                colSpan={3}
+                className="py-10 text-center text-muted"
+              >
+                Nenhum time encontrado.
+              </Table.Cell>
+            </Table.Row>
+          )}
+        </Table.Body>
+      </Table>
+
+      <FormModal
         isOpen={isFormModalOpen}
         onClose={() => setIsFormModalOpen(false)}
+        title={currentTeam ? "Editar Time" : "Novo Time"}
         onSubmit={handleFormSubmit}
-        currentTeam={currentTeam}
-        formData={formData}
-        setFormData={setFormData}
-      />
+        isEditing={!!currentTeam}
+      >
+        <FormField id="team-name" label="Nome">
+          <FormField.Input
+            type="text"
+            id="team-name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            required
+          />
+        </FormField>
+      </FormModal>
 
-      <TeamDeleteModal
+      <DeleteModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleDeleteConfirm}
-        currentTeam={currentTeam}
+        resourceName={currentTeam?.name}
       />
-    </div>
+    </PageContainer>
   );
 };
 
