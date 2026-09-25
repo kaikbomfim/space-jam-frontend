@@ -1,11 +1,52 @@
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
 
-function App() {
+const routes = [
+  {
+    path: "/games",
+    label: "Jogos",
+    element: <div className="text-xl">Página de Jogos</div>,
+  },
+  {
+    path: "/participations",
+    label: "Participações",
+    element: <div className="text-xl">Página de Participações</div>,
+  },
+  {
+    path: "/players",
+    label: "Jogadores",
+    element: <div className="text-xl">Página de Jogadores</div>,
+  },
+  {
+    path: "/teams",
+    label: "Times",
+    element: <div className="text-xl">Página de Times</div>,
+  },
+];
+
+const App = () => {
   return (
-    <>
-      <h1 class="text-3xl font-bold underline">Hello world!</h1>
-    </>
+    <BrowserRouter>
+      <div className="min-h-screen bg-gray-50">
+        <Navbar routes={routes} />
+        <main className="p-8">
+          <Routes>
+            <Route
+              path="/"
+              element={<div className="text-xl">Bem-vindo ao SpaceJam</div>}
+            />
+            {routes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={route.element}
+              />
+            ))}
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import NavbarLink from "../NavbarLink";
 
-const Navbar = ({ links }) => {
+const Navbar = ({ routes }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -19,9 +19,9 @@ const Navbar = ({ links }) => {
         </button>
 
         <div className="hidden md:flex gap-6">
-          {links.map((link) => (
-            <NavbarLink key={link.path} to={link.path}>
-              {link.label}
+          {routes.map((route) => (
+            <NavbarLink key={route.path} to={route.path}>
+              {route.label}
             </NavbarLink>
           ))}
         </div>
@@ -29,9 +29,9 @@ const Navbar = ({ links }) => {
 
       {isOpen && (
         <div className="md:hidden flex flex-col gap-4 px-4 pb-4">
-          {links.map((link) => (
-            <div key={link.path} onClick={() => setIsOpen(false)}>
-              <NavbarLink to={link.path}>{link.label}</NavbarLink>
+          {routes.map((route) => (
+            <div key={route.path} onClick={() => setIsOpen(false)}>
+              <NavbarLink to={route.path}>{route.label}</NavbarLink>
             </div>
           ))}
         </div>
