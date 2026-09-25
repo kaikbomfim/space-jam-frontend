@@ -1,1 +1,53 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", system-ui, sans-serif;
+  --font-display: "Unbounded", system-ui, sans-serif;
+
+  --color-space-950: #0a0d1c;
+  --color-space-900: #0e1330;
+  --color-space-850: #121731;
+  --color-space-800: #1a2044;
+  --color-space-700: #1c2248;
+  --color-space-600: #1f2547;
+  --color-space-500: #262d57;
+  --color-space-300: #5b6490;
+
+  --color-ink: #eef0fa;
+  --color-ink-soft: #c8cde6;
+  --color-muted: #9aa3c7;
+
+  --color-flame: #ff7a1a;
+  --color-flame-soft: #ff9a4d;
+  --color-flame-pale: #ffb77f;
+  --color-flame-dim: #3a2210;
+
+  --color-nebula: #b7a4ff;
+  --color-nebula-dim: #2a2350;
+
+  --color-aurora: #5ee6b0;
+  --color-aurora-dim: #10362c;
+
+  --color-danger: #ff7a8a;
+  --color-danger-dim: #3a1520;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-space-950 font-sans text-ink antialiased;
+    background-image: radial-gradient(#ffffff22 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8);
+  }
+}
