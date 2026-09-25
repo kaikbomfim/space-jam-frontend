@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Team from "./routes/Team";
 
 const routes = [
   {
@@ -20,7 +21,7 @@ const routes = [
   {
     path: "/teams",
     label: "Times",
-    element: <div className="text-xl">Página de Times</div>,
+    element: <Team />,
   },
 ];
 
