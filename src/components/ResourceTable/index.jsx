@@ -1,8 +1,8 @@
-import { Edit2, Trash2 } from "lucide-react";
+import ActionButtons from "../ActionButtons";
 
 const TableHeader = ({ children }) => {
   return (
-    <thead className="border-b border-gray-200 bg-gray-50">
+    <thead className="border-b border-space-500">
       <tr>{children}</tr>
     </thead>
   );
@@ -11,7 +11,7 @@ const TableHeader = ({ children }) => {
 const TableHeadCell = ({ children, className = "" }) => {
   return (
     <th
-      className={`px-6 py-4 text-xs font-bold uppercase tracking-wider text-gray-500 ${className}`}
+      className={`px-4 py-3.5 text-xs font-bold uppercase tracking-[1.2px] text-muted ${className}`}
     >
       {children}
     </th>
@@ -19,14 +19,12 @@ const TableHeadCell = ({ children, className = "" }) => {
 };
 
 const TableBody = ({ children }) => {
-  return (
-    <tbody className="divide-y divide-gray-200 bg-white">{children}</tbody>
-  );
+  return <tbody className="divide-y divide-space-700">{children}</tbody>;
 };
 
 const TableRow = ({ children, className = "" }) => {
   return (
-    <tr className={`transition-colors hover:bg-gray-50 ${className}`}>
+    <tr className={`transition-colors hover:bg-space-800/50 ${className}`}>
       {children}
     </tr>
   );
@@ -34,47 +32,17 @@ const TableRow = ({ children, className = "" }) => {
 
 const TableCell = ({ children, colSpan, className = "" }) => {
   return (
-    <td
-      colSpan={colSpan}
-      className={`px-6 py-4 text-sm text-gray-700 ${className}`}
-    >
+    <td colSpan={colSpan} className={`px-4 py-3.5 text-[15px] ${className}`}>
       {children}
     </td>
   );
 };
 
-const TableActions = ({ onEdit, onDelete }) => {
-  return (
-    <div className="flex justify-end gap-2">
-      {onEdit && (
-        <button
-          onClick={onEdit}
-          className="rounded-md p-1.5 text-blue-600 transition-colors hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          title="Editar"
-        >
-          <Edit2 size={16} />
-        </button>
-      )}
-      {onDelete && (
-        <button
-          onClick={onDelete}
-          className="rounded-md p-1.5 text-red-600 transition-colors hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500"
-          title="Excluir"
-        >
-          <Trash2 size={16} />
-        </button>
-      )}
-    </div>
-  );
-};
-
 const ResourceTable = ({ children }) => {
   return (
-    <div className="w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+    <div className="w-full overflow-hidden rounded-[20px] border border-space-500 bg-space-850">
       <div className="overflow-x-auto">
-        <table className="w-full whitespace-nowrap text-left text-sm">
-          {children}
-        </table>
+        <table className="w-full whitespace-nowrap text-left">{children}</table>
       </div>
     </div>
   );
@@ -85,6 +53,6 @@ ResourceTable.HeadCell = TableHeadCell;
 ResourceTable.Body = TableBody;
 ResourceTable.Row = TableRow;
 ResourceTable.Cell = TableCell;
-ResourceTable.Actions = TableActions;
+ResourceTable.Actions = ActionButtons;
 
 export default ResourceTable;
