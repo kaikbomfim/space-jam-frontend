@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Users } from "lucide-react";
-import ResourceHeader from "../../components/ResourceHeader";
+import Header from "../../components/Header";
 import SearchBar from "../../components/SearchBar";
-import ResourceTable from "../../components/ResourceTable";
+import Table from "../../components/Table";
 import FormModal from "../../components/FormModal";
 import DeleteModal from "../../components/DeleteModal";
 import {
@@ -16,7 +16,7 @@ import {
 const TeamHeader = ({ onAddClick, onSearch }) => {
   return (
     <div>
-      <ResourceHeader title="Times" icon={Users} onAddClick={onAddClick} />
+      <Header title="Times" icon={Users} onAddClick={onAddClick} />
       <SearchBar placeholder="Buscar time pelo nome..." onSearch={onSearch} />
     </div>
   );
@@ -24,40 +24,40 @@ const TeamHeader = ({ onAddClick, onSearch }) => {
 
 const TeamTable = ({ teams, onEditClick, onDeleteClick }) => {
   return (
-    <ResourceTable>
-      <ResourceTable.Header>
-        <ResourceTable.HeadCell>ID</ResourceTable.HeadCell>
-        <ResourceTable.HeadCell>Nome</ResourceTable.HeadCell>
-        <ResourceTable.HeadCell className="text-right">
+    <Table>
+      <Table.Header>
+        <Table.HeadCell>ID</Table.HeadCell>
+        <Table.HeadCell>Nome</Table.HeadCell>
+        <Table.HeadCell className="text-right">
           Ações
-        </ResourceTable.HeadCell>
-      </ResourceTable.Header>
+        </Table.HeadCell>
+      </Table.Header>
 
-      <ResourceTable.Body>
+      <Table.Body>
         {teams.length > 0 ? (
           teams.map((team) => (
-            <ResourceTable.Row key={team._id}>
-              <ResourceTable.Cell>{team._id}</ResourceTable.Cell>
-              <ResourceTable.Cell className="font-medium text-gray-900">
+            <Table.Row key={team._id}>
+              <Table.Cell>{team._id}</Table.Cell>
+              <Table.Cell className="font-medium text-gray-900">
                 {team.name}
-              </ResourceTable.Cell>
-              <ResourceTable.Cell>
-                <ResourceTable.Actions
+              </Table.Cell>
+              <Table.Cell>
+                <Table.Actions
                   onEdit={() => onEditClick(team)}
                   onDelete={() => onDeleteClick(team)}
                 />
-              </ResourceTable.Cell>
-            </ResourceTable.Row>
+              </Table.Cell>
+            </Table.Row>
           ))
         ) : (
-          <ResourceTable.Row>
-            <ResourceTable.Cell colSpan={3} className="py-8 text-center">
+          <Table.Row>
+            <Table.Cell colSpan={3} className="py-8 text-center">
               Nenhum time encontrado.
-            </ResourceTable.Cell>
-          </ResourceTable.Row>
+            </Table.Cell>
+          </Table.Row>
         )}
-      </ResourceTable.Body>
-    </ResourceTable>
+      </Table.Body>
+    </Table>
   );
 };
 

@@ -38,7 +38,7 @@ const TableCell = ({ children, colSpan, className = "" }) => {
   );
 };
 
-const ResourceTable = ({ children }) => {
+const Table = ({ children }) => {
   return (
     <div className="w-full overflow-hidden rounded-[20px] border border-space-500 bg-space-850">
       <div className="overflow-x-auto">
@@ -48,11 +48,11 @@ const ResourceTable = ({ children }) => {
   );
 };
 
-ResourceTable.Header = TableHeader;
-ResourceTable.HeadCell = TableHeadCell;
-ResourceTable.Body = TableBody;
-ResourceTable.Row = TableRow;
-ResourceTable.Cell = TableCell;
-ResourceTable.Actions = ActionButtons;
+Table.Header = TableHeader;
+Table.HeadCell = TableHeadCell;
+Table.Body = TableBody;
+Table.Row = TableRow;
+Table.Cell = TableCell;
+Table.Actions = ActionButtons;
 
-export default ResourceTable;
+export default Table;

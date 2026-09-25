@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import Button from "../Button";
 
-const PageHeader = ({
+const Header = ({
   title,
   description,
   count,
@@ -35,4 +35,4 @@ const PageHeader = ({
   );
 };
 
-export default PageHeader;
+export default Header;
