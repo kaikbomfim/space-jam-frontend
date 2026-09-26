@@ -56,3 +56,12 @@ export const toDateTimeLocal = (value) => {
   const offset = date.getTimezoneOffset() * 60000;
   return new Date(date.getTime() - offset).toISOString().slice(0, 16);
 };
+
+export const formatDay = (value) => {
+  if (!value) return "-";
+  return new Date(value).toLocaleDateString("pt-BR", { timeZone: "UTC" });
+};
+
+export const toDateInput = (value) => {
+  return value ? String(value).slice(0, 10) : "";
+};
