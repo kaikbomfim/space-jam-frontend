@@ -6,7 +6,6 @@ import Table from "../../components/Table";
 import FormModal from "../../components/FormModal";
 import FormField from "../../components/FormField";
 import DeleteModal from "../../components/DeleteModal";
-import { useToast } from "../../hooks/useToast";
 import {
   getTeams,
   getTeamByName,
@@ -15,7 +14,7 @@ import {
   deleteTeam,
 } from "../../services/teamService";
 import { EMPTY_TEAM_FORM, TEAM_TOAST_MESSAGES } from "../../constants/team";
-import { getErrorMessage } from "../../utils/toast";
+import { getErrorMessage, toast } from "../../utils/toast";
 
 const Team = () => {
   const [teams, setTeams] = useState([]);
@@ -25,7 +24,6 @@ const Team = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentTeam, setCurrentTeam] = useState(null);
   const [formData, setFormData] = useState(EMPTY_TEAM_FORM);
-  const toast = useToast();
 
   useEffect(() => {
     const loadTeams = async () => {

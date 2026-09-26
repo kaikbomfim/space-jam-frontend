@@ -13,7 +13,6 @@ import EmptyState from "../../components/EmptyState";
 import FormModal from "../../components/FormModal";
 import FormField from "../../components/FormField";
 import DeleteModal from "../../components/DeleteModal";
-import { useToast } from "../../hooks/useToast";
 import {
   getGames,
   createGame,
@@ -34,7 +33,7 @@ import {
   GAME_STATUS_OPTIONS,
   GAME_TOAST_MESSAGES,
 } from "../../constants/game";
-import { getErrorMessage } from "../../utils/toast";
+import { getErrorMessage, toast } from "../../utils/toast";
 
 const Game = () => {
   const [games, setGames] = useState([]);
@@ -45,7 +44,6 @@ const Game = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentGame, setCurrentGame] = useState(null);
   const [formData, setFormData] = useState(EMPTY_GAME_FORM);
-  const toast = useToast();
 
   useEffect(() => {
     const loadGames = async () => {

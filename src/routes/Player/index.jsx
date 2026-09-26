@@ -10,7 +10,6 @@ import Badge from "../../components/Badge";
 import FormModal from "../../components/FormModal";
 import FormField from "../../components/FormField";
 import DeleteModal from "../../components/DeleteModal";
-import { useToast } from "../../hooks/useToast";
 import {
   getPlayers,
   getPlayerByFavoritePosition,
@@ -27,7 +26,7 @@ import {
   STAT_FIELDS,
 } from "../../constants/player";
 import { getLeaders, getPositionLabel, getStat } from "../../utils/player";
-import { getErrorMessage } from "../../utils/toast";
+import { getErrorMessage, toast } from "../../utils/toast";
 
 const Player = () => {
   const [players, setPlayers] = useState([]);
@@ -37,7 +36,6 @@ const Player = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState(null);
   const [formData, setFormData] = useState(EMPTY_PLAYER_FORM);
-  const toast = useToast();
 
   useEffect(() => {
     const loadPlayers = async () => {

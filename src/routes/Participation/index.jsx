@@ -11,7 +11,6 @@ import Badge from "../../components/Badge";
 import FormModal from "../../components/FormModal";
 import FormField from "../../components/FormField";
 import DeleteModal from "../../components/DeleteModal";
-import { useToast } from "../../hooks/useToast";
 import {
   getParticipations,
   findParticipationByIds,
@@ -41,7 +40,7 @@ import {
   toParticipationForm,
   toParticipationPayload,
 } from "../../utils/participation";
-import { getErrorMessage } from "../../utils/toast";
+import { getErrorMessage, toast } from "../../utils/toast";
 
 const Participation = () => {
   const [participations, setParticipations] = useState([]);
@@ -55,7 +54,6 @@ const Participation = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentParticipation, setCurrentParticipation] = useState(null);
   const [formData, setFormData] = useState(EMPTY_PARTICIPATION_FORM);
-  const toast = useToast();
 
   useEffect(() => {
     const loadOptions = async () => {
