@@ -6,6 +6,7 @@ import Table from "../../components/Table";
 import FormModal from "../../components/FormModal";
 import FormField from "../../components/FormField";
 import DeleteModal from "../../components/DeleteModal";
+import { useToast } from "../../hooks/useToast";
 import {
   getTeams,
   getTeamByName,
@@ -13,7 +14,8 @@ import {
   updateTeam,
   deleteTeam,
 } from "../../services/teamService";
-import { EMPTY_TEAM_FORM } from "../../constants/team";
+import { EMPTY_TEAM_FORM, TEAM_TOAST_MESSAGES } from "../../constants/team";
+import { getErrorMessage } from "../../utils/toast";
 
 const Team = () => {
   const [teams, setTeams] = useState([]);
@@ -23,6 +25,7 @@ const Team = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentTeam, setCurrentTeam] = useState(null);
   const [formData, setFormData] = useState(EMPTY_TEAM_FORM);
+  const toast = useToast();
 
   useEffect(() => {
     const loadTeams = async () => {
@@ -72,20 +75,26 @@ const Team = () => {
       } else {
         await createTeam(formData);
       }
+      toast.success(
+        currentTeam ? TEAM_TOAST_MESSAGES.update : TEAM_TOAST_MESSAGES.create,
+      );
       setIsFormModalOpen(false);
       reloadTeams();
     } catch (error) {
       console.error(error);
+      toast.error(getErrorMessage(error));
     }
   };
 
   const handleDeleteConfirm = async () => {
     try {
       await deleteTeam(currentTeam._id);
+      toast.success(TEAM_TOAST_MESSAGES.delete);
       setIsDeleteModalOpen(false);
       reloadTeams();
     } catch (error) {
       console.error(error);
+      toast.error(getErrorMessage(error));
     }
   };
 
