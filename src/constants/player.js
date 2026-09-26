@@ -39,3 +39,9 @@ export const EMPTY_PLAYER_FORM = {
   favorite_position: POSITION_OPTIONS[0].value,
   total_stats: EMPTY_STATS,
 };
+
+export const PLAYER_TOAST_MESSAGES = {
+  create: "Jogador criado com sucesso",
+  update: "Jogador atualizado com sucesso",
+  delete: "Jogador excluído com sucesso",
+};

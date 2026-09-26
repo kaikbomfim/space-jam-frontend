@@ -10,6 +10,7 @@ import Badge from "../../components/Badge";
 import FormModal from "../../components/FormModal";
 import FormField from "../../components/FormField";
 import DeleteModal from "../../components/DeleteModal";
+import { useToast } from "../../hooks/useToast";
 import {
   getPlayers,
   getPlayerByFavoritePosition,
@@ -20,11 +21,13 @@ import {
 import {
   EMPTY_PLAYER_FORM,
   EMPTY_STATS,
+  PLAYER_TOAST_MESSAGES,
   POSITION_FILTERS,
   POSITION_OPTIONS,
   STAT_FIELDS,
 } from "../../constants/player";
 import { getLeaders, getPositionLabel, getStat } from "../../utils/player";
+import { getErrorMessage } from "../../utils/toast";
 
 const Player = () => {
   const [players, setPlayers] = useState([]);
@@ -34,6 +37,7 @@ const Player = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState(null);
   const [formData, setFormData] = useState(EMPTY_PLAYER_FORM);
+  const toast = useToast();
 
   useEffect(() => {
     const loadPlayers = async () => {
@@ -108,20 +112,28 @@ const Player = () => {
       } else {
         await createPlayer(payload);
       }
+      toast.success(
+        currentPlayer
+          ? PLAYER_TOAST_MESSAGES.update
+          : PLAYER_TOAST_MESSAGES.create,
+      );
       setIsFormModalOpen(false);
       reloadPlayers();
     } catch (error) {
       console.error(error);
+      toast.error(getErrorMessage(error));
     }
   };
 
   const handleDeleteConfirm = async () => {
     try {
       await deletePlayer(currentPlayer._id);
+      toast.success(PLAYER_TOAST_MESSAGES.delete);
       setIsDeleteModalOpen(false);
       reloadPlayers();
     } catch (error) {
       console.error(error);
+      toast.error(getErrorMessage(error));
     }
   };
 
