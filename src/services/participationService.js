@@ -25,6 +25,7 @@ export const getParticipation = async (id) => {
 };
 
 export const createParticipation = async (participation) => {
+  console.log(participation)
   const response = await participationService.post("/", participation);
   return response.data;
 };

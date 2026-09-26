@@ -1,10 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ClipboardCheck, LayoutGrid, Shield, Users } from "lucide-react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import PageContainer from "./components/PageContainer";
-import EmptyState from "./components/EmptyState";
-import Home from "./routes/Home";
 import Game from "./routes/Game";
+import Home from "./routes/Home";
+import Participation from "./routes/Participation";
 import Player from "./routes/Player";
 import Team from "./routes/Team";
 
@@ -19,15 +18,7 @@ const routes = [
     path: "/participations",
     label: "Participações",
     icon: ClipboardCheck,
-    element: (
-      <PageContainer>
-        <EmptyState
-          icon={ClipboardCheck}
-          title="Participações"
-          message="Esta página está em construção."
-        />
-      </PageContainer>
-    ),
+    element: <Participation />,
   },
   {
     path: "/players",
