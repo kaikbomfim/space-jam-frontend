@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PageContainer from "../../components/PageContainer";
 import Header from "../../components/Header";
-import SearchBar from "../../components/SearchBar";
+import SelectFilter from "../../components/SelectFilter";
 import CardGrid from "../../components/CardGrid";
 import HighlightCard from "../../components/HighlightCard";
 import Table from "../../components/Table";
@@ -20,6 +20,7 @@ import {
 import {
   EMPTY_PLAYER_FORM,
   EMPTY_STATS,
+  POSITION_FILTERS,
   POSITION_OPTIONS,
   STAT_FIELDS,
 } from "../../constants/player";
@@ -27,7 +28,7 @@ import { getLeaders, getPositionLabel, getStat } from "../../utils/player";
 
 const Player = () => {
   const [players, setPlayers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [positionFilter, setPositionFilter] = useState("");
   const [reloadKey, setReloadKey] = useState(0);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -37,8 +38,8 @@ const Player = () => {
   useEffect(() => {
     const loadPlayers = async () => {
       try {
-        const data = searchTerm
-          ? await getPlayerByFavoritePosition(searchTerm)
+        const data = positionFilter
+          ? await getPlayerByFavoritePosition(positionFilter)
           : await getPlayers();
         setPlayers(data);
       } catch (error) {
@@ -48,16 +49,12 @@ const Player = () => {
     };
 
     loadPlayers();
-  }, [searchTerm, reloadKey]);
+  }, [positionFilter, reloadKey]);
 
   const leaders = getLeaders(players);
 
   const reloadPlayers = () => {
     setReloadKey((key) => key + 1);
-  };
-
-  const handleSearch = (term) => {
-    setSearchTerm(term.trim().toLowerCase());
   };
 
   const handleChange = (field) => (e) => {
@@ -137,7 +134,12 @@ const Player = () => {
         addLabel="Novo jogador"
         onAddClick={handleAddClick}
       >
-        <SearchBar placeholder="Buscar por posição…" onSearch={handleSearch} />
+        <SelectFilter
+          label="Filtrar por posição"
+          options={POSITION_FILTERS}
+          value={positionFilter}
+          onChange={setPositionFilter}
+        />
       </Header>
 
       {leaders.length > 0 && (

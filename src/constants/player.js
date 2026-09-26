@@ -5,6 +5,11 @@ export const POSITION_OPTIONS = [
   { value: "pivo", label: "Pivô" },
 ];
 
+export const POSITION_FILTERS = [
+  { value: "", label: "Todas as posições" },
+  ...POSITION_OPTIONS,
+];
+
 export const STAT_FIELDS = [
   { key: "points", label: "Pontos", abbr: "PTS" },
   { key: "assists", label: "Assistências", abbr: "AST" },
