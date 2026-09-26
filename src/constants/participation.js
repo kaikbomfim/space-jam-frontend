@@ -16,3 +16,9 @@ export const EMPTY_PARTICIPATION_FORM = {
 };
 
 export const TEAM_FILTER_ALL = { value: "", label: "Todos os times" };
+
+export const PARTICIPATION_TOAST_MESSAGES = {
+  create: "Participação criada com sucesso",
+  update: "Participação atualizada com sucesso",
+  delete: "Participação excluída com sucesso",
+};

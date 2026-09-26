@@ -11,6 +11,7 @@ import Badge from "../../components/Badge";
 import FormModal from "../../components/FormModal";
 import FormField from "../../components/FormField";
 import DeleteModal from "../../components/DeleteModal";
+import { useToast } from "../../hooks/useToast";
 import {
   getParticipations,
   findParticipationByIds,
@@ -24,6 +25,7 @@ import { getPlayers } from "../../services/playerService";
 import {
   EMPTY_PARTICIPATION_FORM,
   EMPTY_PAYMENT,
+  PARTICIPATION_TOAST_MESSAGES,
   TEAM_FILTER_ALL,
 } from "../../constants/participation";
 import { STAT_FIELDS } from "../../constants/player";
@@ -39,6 +41,7 @@ import {
   toParticipationForm,
   toParticipationPayload,
 } from "../../utils/participation";
+import { getErrorMessage } from "../../utils/toast";
 
 const Participation = () => {
   const [participations, setParticipations] = useState([]);
@@ -52,6 +55,7 @@ const Participation = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentParticipation, setCurrentParticipation] = useState(null);
   const [formData, setFormData] = useState(EMPTY_PARTICIPATION_FORM);
+  const toast = useToast();
 
   useEffect(() => {
     const loadOptions = async () => {
@@ -160,20 +164,28 @@ const Participation = () => {
       } else {
         await createParticipation(payload);
       }
+      toast.success(
+        currentParticipation
+          ? PARTICIPATION_TOAST_MESSAGES.update
+          : PARTICIPATION_TOAST_MESSAGES.create,
+      );
       setIsFormModalOpen(false);
       reloadParticipations();
     } catch (error) {
       console.error(error);
+      toast.error(getErrorMessage(error));
     }
   };
 
   const handleDeleteConfirm = async () => {
     try {
       await deleteParticipation(currentParticipation._id);
+      toast.success(PARTICIPATION_TOAST_MESSAGES.delete);
       setIsDeleteModalOpen(false);
       reloadParticipations();
     } catch (error) {
       console.error(error);
+      toast.error(getErrorMessage(error));
     }
   };
 
