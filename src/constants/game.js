@@ -23,3 +23,9 @@ export const EMPTY_GAME_FORM = {
   player_limit_min: "",
   player_limit_max: "",
 };
+
+export const GAME_TOAST_MESSAGES = {
+  create: "Jogo criado com sucesso",
+  update: "Jogo atualizado com sucesso",
+  delete: "Jogo excluído com sucesso",
+};

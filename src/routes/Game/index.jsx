@@ -13,6 +13,7 @@ import EmptyState from "../../components/EmptyState";
 import FormModal from "../../components/FormModal";
 import FormField from "../../components/FormField";
 import DeleteModal from "../../components/DeleteModal";
+import { useToast } from "../../hooks/useToast";
 import {
   getGames,
   createGame,
@@ -31,7 +32,9 @@ import {
   GAME_STATUS_BADGE_VARIANTS,
   GAME_STATUS_FILTERS,
   GAME_STATUS_OPTIONS,
+  GAME_TOAST_MESSAGES,
 } from "../../constants/game";
+import { getErrorMessage } from "../../utils/toast";
 
 const Game = () => {
   const [games, setGames] = useState([]);
@@ -42,6 +45,7 @@ const Game = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentGame, setCurrentGame] = useState(null);
   const [formData, setFormData] = useState(EMPTY_GAME_FORM);
+  const toast = useToast();
 
   useEffect(() => {
     const loadGames = async () => {
@@ -128,20 +132,26 @@ const Game = () => {
       } else {
         await createGame({ ...payload, matches: [] });
       }
+      toast.success(
+        currentGame ? GAME_TOAST_MESSAGES.update : GAME_TOAST_MESSAGES.create,
+      );
       setIsFormModalOpen(false);
       reloadGames();
     } catch (error) {
       console.error(error);
+      toast.error(getErrorMessage(error));
     }
   };
 
   const handleDeleteConfirm = async () => {
     try {
       await deleteGame(currentGame._id);
+      toast.success(GAME_TOAST_MESSAGES.delete);
       setIsDeleteModalOpen(false);
       reloadGames();
     } catch (error) {
       console.error(error);
+      toast.error(getErrorMessage(error));
     }
   };
 
